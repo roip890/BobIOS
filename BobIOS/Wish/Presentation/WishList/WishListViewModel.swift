@@ -48,13 +48,14 @@ class WishListViewModel: ObservableObject {
             return Future<WishListResult, Never> { promise in
                 self.wishRepository.getWishes()
                     .sinkToResult({ result in
+                        print(result)
                         switch(result) {
                         case let .failure(error):
                             promise(.success(.getWishesResult(.error(error: error))))
                         case let .success(wishes):
                             promise(.success(.getWishesResult(.success(wishes: wishes))))
                         }
-                })
+                    }).store(in: self.cancelBag)
             }
             .prepend(.getWishesResult(.loading))
             .eraseToAnyPublisher()

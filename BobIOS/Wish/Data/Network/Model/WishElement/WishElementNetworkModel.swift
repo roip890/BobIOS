@@ -20,23 +20,23 @@ public struct WishElementNetworkModel: Codable, Equatable, Identifiable {
     var order: Int?
 
     private enum CodingKeys: String, CodingKey{
-        case id = "id"
+        case id = "wishElementId"
 
-        case key = "key"
-        case value = "value"
-        case type = "type"
-        case order = "order"
+        case key = "elementKey"
+        case value = "elementValue"
+        case type = "elementType"
+        case order = "elementOrder"
     }
 
     public func encode(to encoder: Encoder) throws{
         var container = encoder.container(keyedBy: CodingKeys.self)
         
-        try container.encode(self.id, forKey: .id)
+        try? container.encode(self.id, forKey: .id)
         
-        try container.encode(self.key, forKey: .key)
-        try container.encode(self.value, forKey: .value)
-        try container.encode(self.type, forKey: .type)
-        try container.encode(self.order, forKey: .order)
+        try? container.encode(self.key, forKey: .key)
+        try? container.encode(self.value, forKey: .value)
+        try? container.encode(self.type, forKey: .type)
+        try? container.encode(self.order, forKey: .order)
     }
     
     public init(from decoder: Decoder) throws{
@@ -44,10 +44,10 @@ public struct WishElementNetworkModel: Codable, Equatable, Identifiable {
                 
         self.id = try container.decode(Int.self, forKey: .id)
         
-        self.key = try container.decode(String.self, forKey: .key)
-        self.value = try container.decode(String.self, forKey: .value)
-        self.type = try container.decode(String.self, forKey: .type)
-        self.order = try container.decode(Int.self, forKey: .order)
+        self.key = try? container.decode(String.self, forKey: .key)
+        self.value = try? container.decode(String.self, forKey: .value)
+        self.type = try? container.decode(String.self, forKey: .type)
+        self.order = try? container.decode(Int.self, forKey: .order)
     }
 
 }

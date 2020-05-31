@@ -32,16 +32,16 @@ public struct WishNetworkModel: Codable, Equatable, Identifiable {
     var user: UserNetworkModel?
     
     private enum CodingKeys: String, CodingKey{
-        case id = "id"
+        case id = "wishId"
 
-        case title = "title"
+        case title = "wishType"
         case isFavorite = "isFavorite"
-        case status = "status"
+        case status = "wishStatus"
         
         case insertTs = "insertTs"
         case lmTs = "lmTs"
 
-        case imageUrl = "imageUrl"
+        case imageUrl = "wishIconUrl"
         
         case elements = "elements"
                 
@@ -55,24 +55,24 @@ public struct WishNetworkModel: Codable, Equatable, Identifiable {
     public func encode(to encoder: Encoder) throws{
         var container = encoder.container(keyedBy: CodingKeys.self)
         
-        try container.encode(self.id, forKey: .id)
+        try? container.encode(self.id, forKey: .id)
         
-        try container.encode(self.title, forKey: .title)
-        try container.encode(self.isFavorite, forKey: .isFavorite)
-        try container.encode(self.status, forKey: .status)
+        try? container.encode(self.title, forKey: .title)
+        try? container.encode(self.isFavorite, forKey: .isFavorite)
+        try? container.encode(self.status, forKey: .status)
         
-        try container.encode(self.insertTs, forKey: .insertTs)
-        try container.encode(self.lmTs, forKey: .lmTs)
+        try? container.encode(self.insertTs, forKey: .insertTs)
+        try? container.encode(self.lmTs, forKey: .lmTs)
 
-        try container.encode(self.imageUrl, forKey: .imageUrl)
+        try? container.encode(self.imageUrl, forKey: .imageUrl)
         
-        try container.encode(self.elements, forKey: .elements)
+        try? container.encode(self.elements, forKey: .elements)
         
-        try container.encode(self.departments, forKey: .departments)
+        try? container.encode(self.departments, forKey: .departments)
         
-        try container.encode(self.bookingId, forKey: .bookingId)
+        try? container.encode(self.bookingId, forKey: .bookingId)
         
-        try container.encode(self.user, forKey: .user)
+        try? container.encode(self.user, forKey: .user)
     }
     
     public init(from decoder: Decoder) throws{
@@ -80,22 +80,28 @@ public struct WishNetworkModel: Codable, Equatable, Identifiable {
                 
         self.id = try container.decode(Int.self, forKey: .id)
         
-        self.title = try container.decode(String.self, forKey: .title)
-        self.isFavorite = try container.decode(Bool.self, forKey: .isFavorite)
-        self.status = try container.decode(String.self, forKey: .status)
+        self.title = try? container.decode(String.self, forKey: .title)
+        self.isFavorite = try? container.decode(Bool.self, forKey: .isFavorite)
+        self.status = try? container.decode(String.self, forKey: .status)
         
-        self.insertTs = try container.decode(String.self, forKey: .insertTs)
-        self.lmTs = try container.decode(String.self, forKey: .lmTs)
+        self.insertTs = try? container.decode(String.self, forKey: .insertTs)
+        self.lmTs = try? container.decode(String.self, forKey: .lmTs)
 
-        self.imageUrl = try container.decode(String.self, forKey: .imageUrl)
+        self.imageUrl = try? container.decode(String.self, forKey: .imageUrl)
 
-        self.elements = try container.decode([WishElementNetworkModel].self, forKey: .elements)
+        self.elements = try? container.decode([WishElementNetworkModel].self, forKey: .elements)
+        if let elements = try? container.decode(WishElementNetworkModel.self, forKey: .elements) {
+            self.elements = [elements]
+        }
 
-        self.departments = try container.decode([String].self, forKey: .departments)
+        self.departments = try? container.decode([String].self, forKey: .departments)
+        if let department = try? container.decode(String.self, forKey: .departments) {
+            self.departments = [department]
+        }
 
-        self.bookingId = try container.decode(Int.self, forKey: .bookingId)
+        self.bookingId = try? container.decode(Int.self, forKey: .bookingId)
         
-        self.user = try container.decode(UserNetworkModel.self, forKey: .user)
+        self.user = try? container.decode(UserNetworkModel.self, forKey: .user)
     }
 
 }

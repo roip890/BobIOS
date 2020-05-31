@@ -22,14 +22,14 @@ public struct GetWishesNetworkResponse: Codable {
 
     public func encode(to encoder: Encoder) throws{
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(self.statusResponse, forKey: .statusResponse)
-        try container.encode(self.wishes, forKey: .wishes)
+        try? container.encode(self.statusResponse, forKey: .statusResponse)
+        try? container.encode(self.wishes, forKey: .wishes)
     }
     
     public init(from decoder: Decoder) throws{
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.statusResponse = try container.decode(StatusResponseNetworkModel.self, forKey: .statusResponse)
-        self.wishes = try container.decode([WishNetworkModel].self, forKey: .wishes)
+        self.statusResponse = try? container.decode(StatusResponseNetworkModel.self, forKey: .statusResponse)
+        self.wishes = try? container.decode([WishNetworkModel].self, forKey: .wishes)
     }
 
 }
@@ -46,12 +46,12 @@ public struct GetWishesNetworkResponseWrapper: Codable {
 
     public func encode(to encoder: Encoder) throws{
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(self.response, forKey: .response)
+        try? container.encode(self.response, forKey: .response)
     }
     
     public init(from decoder: Decoder) throws{
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.response = try container.decode(GetWishesNetworkResponse.self, forKey: .response)
+        self.response = try? container.decode(GetWishesNetworkResponse.self, forKey: .response)
     }
 
 }

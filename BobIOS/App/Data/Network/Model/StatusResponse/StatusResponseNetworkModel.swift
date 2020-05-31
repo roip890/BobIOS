@@ -24,16 +24,16 @@ public struct StatusResponseNetworkModel: Codable, Equatable {
 
     public func encode(to encoder: Encoder) throws{
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(self.code, forKey: .code)
-        try container.encode(self.message, forKey: .message)
-        try container.encode(self.status, forKey: .status)
+        try? container.encode(self.code, forKey: .code)
+        try? container.encode(self.message, forKey: .message)
+        try? container.encode(self.status, forKey: .status)
     }
     
     public init(from decoder: Decoder) throws{
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.code = try container.decode(Int.self, forKey: .code)
-        self.message = try container.decode(String.self, forKey: .message)
-        self.status = try container.decode(String.self, forKey: .status)
+        self.code = try? container.decode(Int.self, forKey: .code)
+        self.message = try? container.decode(String.self, forKey: .message)
+        self.status = try? container.decode(String.self, forKey: .status)
     }
 
 }
